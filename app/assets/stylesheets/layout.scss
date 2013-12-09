@@ -2,19 +2,35 @@ header {
   margin: 1em 0 0 0;
 
   .brand {
-    margin-bottom: 30px;
+    margin-bottom: 2em;
 
     h1 {
-      line-height: 90px;
-      font-family: 'Lobster', arial, serif;
-      font-size: 90px;
+      line-height: 0.75em;
+      font-family: 'Londrina Sketch', Arial, sans-serif;
+      font-size: 6em;
+      font-weight: 400;
       margin: 0;
+      color: $heading-colour;
+      text-shadow: $highlight-colour 0px 0px 4px;
 
       a:hover {
         text-decoration: none;
       }
+
+      a:link, a:visited {
+        color: $heading-colour;
+      }
     }
   }
+}
+.nav > li > a:hover {
+  text-decoration: none;
+  background-color: $highlight-nav-background-colour;
+}
+.nav-pills > .active > a,
+.nav-pills > .active > a:hover {
+  color: $white;
+  background-color: $active-nav-background-colour;
 }
 
 #content {
@@ -22,15 +38,24 @@ header {
 
   section {
     margin-bottom: 2em;
+
+    h1 {
+      font-size: 3em;
+      line-height: (1.5em/2);
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      margin: (1.5em/3) 0 (1.5em/6) 0;
+      padding: 0;
+    }
   }
 }
 
 
 form.button_to {
   margin-bottom: 0;
-  margin-top: 2px;
+  margin-top: (1.5em/8);
   input {
-    padding: 5px 12px;
+    padding: (1.5em/4) (1.5em/0.75);
   }
 
   display: inline;
@@ -58,6 +83,11 @@ label {
 }
 
 .the-process {
-  h1 { font-size: $baseFontSize * 2; }
-  h2 { font-size: $baseFontSize * 1.75; }
+  h1 { font-size: 3em; }
+  h2 { font-size: 2em; }
+}
+
+#container {
+  margin: 0 auto;
+  max-width: 800px;
 }
