@@ -101,4 +101,6 @@ en:
         involved:
           title: Proposals %{name_is_or_are} involved with
           none: "%{name_is_or_are} not involved with anybody else's proposals."
+    archive:
+      notice: This version of Vestibule is <em>read only</em>. It represents an archive of the community effort to produce content for <a href="http://rubymanor.org/4/">Ruby Manor 4</a>.
 
