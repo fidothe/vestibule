@@ -1,4 +1,14 @@
 $baseFontSize: 16px;
+$baseLineHeight: $baseFontSize * 1.5;
+$background-colour-light:     hsl(210, 10%, 95%);
+$text-colour-dark:            hsl(210, 10%, 10%);
+$heading-colour:              hsl(210, 90%, 25%);
+$highlight-colour:            hsl(210, 90%, 50%);
+$active-nav-background-colour:    $heading-colour;
+$highlight-nav-background-colour: hsl(210, 10%, 75%);
+$bodyBackground:              $background-colour-light;
+$textColor:                   $text-colour-dark;
+$linkColor:                   $highlight-colour;
 
 @import "bootstrap";
 @import "bootstrap-responsive";
