@@ -11,12 +11,12 @@ module FeatureFlag
     FeatureFlag.can?(*args)
   end
 
-  def anyone_can(action, object, &block)
-    instance_exec(&block) if can?(action, object)
+  def anyone(can_query, &block)
+    instance_exec(&block) if can_query
   end
 
-  def no_one_can(action, object, &block)
-    instance_exec(&block) if !can?(action, object)
+  def no_one(can_query, &block)
+    instance_exec(&block) if !can_query
   end
 
   module ClassMethods
@@ -24,12 +24,12 @@ module FeatureFlag
       FeatureFlag.can?(*args)
     end
 
-    def anyone_can(action, object, &block)
-      class_exec(&block) if can?(action, object)
+    def anyone(can_query, &block)
+      class_exec(&block) if can_query
     end
 
-    def no_one_can(action, object, &block)
-      class_exec(&block) if !can?(action, object)
+    def no_one(can_query, &block)
+      class_exec(&block) if !can_query
     end
   end
 end

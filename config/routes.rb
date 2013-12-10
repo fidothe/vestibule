@@ -8,10 +8,10 @@ Vestibule::Application.routes.draw do
   end
   resources :selections, :only => [:index, :create, :destroy]
 
-  anyone_can :see, :motivation do
+  anyone(can?(:see, :motivation)) do
     match "/motivation", :to => "home#motivation", :as => "motivation"
   end
-  anyone_can :add, :motivation do
+  anyone(can?(:add, :motivation)) do
     match "/my-motivation", :to => "home#my_motivation", :as => "complete_motivation"
   end
   match "/about", :to => "home#about", :as => "about"

@@ -7,36 +7,23 @@ class ModeHelperTest < ActionView::TestCase
     @current_user
   end
 
-  # this is almost unspeakably horrid
-  # def can?(*args)
-  #   ApplicationController.new.send(:can?, *args)
-  # end
-
-  context "anyone_can" do
+  context "anyone can" do
     should "render its block for a mode operation which is enabled for everyone" do
-      Vestibule.mode_of_operation = :agenda
-
-      assert_equal "a", anyone_can(:see, :agenda) { "a" }
+      assert_equal "a", anyone(true) { "a" }
     end
 
     should "not render its block for a mode operation which is not enabled for everyone" do
-      Vestibule.mode_of_operation = :cfp
-
-      assert_equal "", anyone_can(:see, :agenda) { "a" }
+      assert_equal "", anyone(false) { "a" }
     end
   end
 
-  context "no_one_can" do
+  context "no_one can" do
     should "render its block for a mode operation which is disabled for everyone" do
-      Vestibule.mode_of_operation = :cfp
-
-      assert_equal "a", no_one_can(:see, :agenda) { "a" }
+      assert_equal "a", no_one(false) { "a" }
     end
 
     should "not render its block for a mode operation which is not disabled for everyone" do
-      Vestibule.mode_of_operation = :agenda
-
-      assert_equal "", no_one_can(:see, :agenda) { "a" }
+      assert_equal "", no_one(true) { "a" }
     end
   end
 
@@ -45,31 +32,23 @@ class ModeHelperTest < ActionView::TestCase
       @current_user = User.new
     end
 
-    context "user_can" do
+    context "a_user" do
       should "render its block for a mode operation which is enabled for users" do
-        Vestibule.mode_of_operation = :cfp
-
-        assert_equal "a", user_can(:make, :proposal) { "a" }
+        assert_equal "a", a_user(true) { "a" }
       end
 
       should "not render its block for a mode operation which is not enabled for users" do
-        Vestibule.mode_of_operation = :cfp
-
-        assert_equal "", user_can(:make, :selection) { "a" }
+        assert_equal "", a_user(false) { "a" }
       end
     end
 
-    context "user_cannot" do
+    context "no_user" do
       should "render its block for a mode operation which is disabled for users" do
-        Vestibule.mode_of_operation = :agenda
-
-        assert_equal "a", user_cannot(:make, :proposal) { "a" }
+        assert_equal "a", no_user(false) { "a" }
       end
 
       should "not render its block for a mode operation which is not disabled for users" do
-        Vestibule.mode_of_operation = :cfp
-
-        assert_equal "", user_cannot(:make, :proposal) { "a" }
+        assert_equal "", no_user(true) { "a" }
       end
     end
   end
@@ -79,31 +58,23 @@ class ModeHelperTest < ActionView::TestCase
       @current_user = AnonymousUser.new
     end
 
-    context "anonymous_can" do
+    context "anonymous" do
       should "render its block for a mode operation which is enabled for anonymous users" do
-        Vestibule.mode_of_operation = :cfp
-
-        assert_equal "a", anonymous_can(:make, :proposal) { "a" }
+        assert_equal "a", anonymous(true) { "a" }
       end
 
       should "not render its block for a mode operation which is not enabled for anonymous users" do
-        Vestibule.mode_of_operation = :cfp
-
-        assert_equal "", anonymous_can(:make, :selection) { "a" }
+        assert_equal "", anonymous(false) { "a" }
       end
     end
 
-    context "anonymous_cannot" do
+    context "no_anonymous" do
       should "render its block for a mode operation which is disabled for anonymous users" do
-        Vestibule.mode_of_operation = :cfp
-
-        assert_equal "a", anonymous_cannot(:see, :agenda) { "a" }
+        assert_equal "a", no_anonymous(false) { "a" }
       end
 
       should "not render its block for a mode operation which is not disabled for anonymous users" do
-        Vestibule.mode_of_operation = :agenda
-
-        assert_equal "", anonymous_cannot(:see, :agenda) { "a" }
+        assert_equal "", no_anonymous(true) { "a" }
       end
     end
   end

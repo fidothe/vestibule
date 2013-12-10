@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_archive_mode_warning_if_required
-    no_one_can(:withdraw, :proposal) do
+    no_one(can?(:withdraw, :proposal)) do
       flash.now[:archive] = t('vestibule.archive.notice').html_safe
     end
   end

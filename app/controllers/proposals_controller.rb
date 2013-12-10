@@ -70,7 +70,7 @@ class ProposalsController < ApplicationController
   end
 
   def check_mode_of_operation
-    unless can?(requested_action, :proposal)
+    no_one(can?(requested_action, :proposal)) do
       flash[:alert] = "In #{Vestibule.mode_of_operation.mode} mode you cannot #{requested_action} a proposal."
       redirect_to action: :index
     end

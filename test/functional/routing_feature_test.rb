@@ -5,7 +5,7 @@ class RoutingFeatureTest < ActionController::TestCase
     Vestibule.mode_of_operation = :cfp
     with_routing do |set|
       set.draw do
-        anyone_can :make, :proposal do
+        anyone(can?(:make, :proposal)) do
           resources :users
         end
       end
@@ -17,7 +17,7 @@ class RoutingFeatureTest < ActionController::TestCase
     Vestibule.mode_of_operation = :cfp
     with_routing do |set|
       set.draw do
-        anyone_can :see, :agenda do
+        anyone(can?(:see, :agenda)) do
           resources :users
         end
       end

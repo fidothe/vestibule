@@ -2,33 +2,33 @@ require 'feature_flag'
 
 module ModeHelper
   include FeatureFlag
-  def anyone_can(action, object, &block)
-    return "" unless can?(action, object)
+  def anyone(can_query, &block)
+    return "" unless can_query
     capture(&block)
   end
 
-  def no_one_can(action, object, &block)
-    return "" if can?(action, object)
+  def no_one(can_query, &block)
+    return "" if can_query
     capture(&block)
   end
 
-  def user_can(action, object, &block)
+  def a_user(can_query, &block)
     return "" unless current_user.known?
-    anyone_can(action, object, &block)
+    anyone(can_query, &block)
   end
 
-  def user_cannot(action, object, &block)
+  def no_user(can_query, &block)
     return "" unless current_user.known?
-    no_one_can(action, object, &block)
+    no_one(can_query, &block)
   end
 
-  def anonymous_can(action, object, &block)
+  def anonymous(can_query, &block)
     return "" unless current_user.anonymous?
-    anyone_can(action, object, &block)
+    anyone(can_query, &block)
   end
 
-  def anonymous_cannot(action, object, &block)
+  def no_anonymous(can_query, &block)
     return "" unless current_user.anonymous?
-    no_one_can(action, object, &block)
+    no_one(can_query, &block)
   end
 end
