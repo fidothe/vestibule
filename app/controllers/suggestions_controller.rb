@@ -1,9 +1,9 @@
 class SuggestionsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :check_action_allowed
 
   def create
     @proposal = Proposal.find(params[:proposal_id])
-    check_mode_of_operation
     @suggestion = current_user.suggestions.build(params[:suggestion].merge(:proposal => @proposal))
     if @suggestion.save
       redirect_to proposal_path(@proposal)
@@ -12,11 +12,10 @@ class SuggestionsController < ApplicationController
     end
   end
 
-  def check_mode_of_operation
-    unless can?(:make, :suggestion)
-      flash[:alert] = "In #{Vestibule.mode_of_operation.mode} mode you cannot make a suggestion."
-      redirect_to proposal_path(@proposal)
+  def check_action_allowed
+    no_one(can?(:make, :suggestion)) do
+      flash[:alert] = t('vestibule.suggestions.action_alert', mode: Vestibule.mode_of_operation.mode)
+      redirect_to proposal_path(params[:proposal_id])
     end
   end
-
 end

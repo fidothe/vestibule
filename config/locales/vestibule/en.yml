@@ -61,6 +61,8 @@ en:
       feed:
         title: "Vestibule :: Suggestions for %{proposal_title}"
         description: A list of all suggestions made for %{proposal_title}
+    suggestions:
+      action_alert: "In %{mode} mode you cannot make a suggestion."
     selections:
       title: Selections
       agenda:

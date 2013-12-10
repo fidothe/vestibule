@@ -200,6 +200,19 @@ Other than that, sounds great!
         end
       end
 
+      context "when the app transitions to archive mode" do
+        setup do
+          Vestibule.mode_of_operation = :agenda
+          visit proposal_path(@proposal)
+        end
+
+        should "warn you and take you back to the proposal page" do
+          Vestibule.mode_of_operation = :archive
+          suggest "I think you should focus on the first bit, because that's going to be more interesting to newbies."
+          assert page.has_content?("In archive mode you cannot make a suggestion")
+        end
+      end
+
       context "a proposer viewing their proposal" do
         setup do
           sign_in @proposer
