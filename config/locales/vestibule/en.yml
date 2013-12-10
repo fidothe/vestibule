@@ -34,6 +34,7 @@ en:
       feed:
         title: "Vestibule :: All Proposals"
         description: A list of all talk proposals made to the vestibule system
+      action_alert: "In %{mode} mode you cannot %{action} a proposal."
     proposal:
       title: Propose a talk
       chosen: This proposal by %{link} has been chosen by the community to be given at Ruby Manor 4.
@@ -79,6 +80,9 @@ en:
           one: "1 selection left!"
           several: "%{quantity} selections left!"
           none: Deselect some above to choose others
+      action_alert:
+        see: "In %{mode} mode you cannot vote for proposals or see the generated agenda."
+        vote: "In %{mode} mode you cannot vote for proposals."
     user:
       title: Your profile
       edit:

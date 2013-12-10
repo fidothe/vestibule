@@ -14,7 +14,7 @@ class ProposalsController < ApplicationController
     respond_with @proposal = Proposal.find(params[:id])
   end
 
-  before_filter :check_mode_of_operation, except: [:index, :show]
+  before_filter :check_action_allowed, except: [:index, :show]
 
   def new
     @proposal = Proposal.new
@@ -69,10 +69,8 @@ class ProposalsController < ApplicationController
     end
   end
 
-  def check_mode_of_operation
-    no_one(can?(requested_action, :proposal)) do
-      flash[:alert] = "In #{Vestibule.mode_of_operation.mode} mode you cannot #{requested_action} a proposal."
-      redirect_to action: :index
-    end
+  def check_action_allowed
+    alert_text = t('vestibule.proposals.action_alert', mode: Vestibule.mode_of_operation.mode, action: requested_action)
+    action_allowed_guard(can?(requested_action, :proposal), alert_text, action: :index)
   end
 end

@@ -29,16 +29,12 @@ class SelectionsController < ApplicationController
 
   private
   def check_mode_of_operation_for_viewing
-    unless can?(:see, :selection) || can?(:see, :agenda)
-      flash[:alert] = "In #{Vestibule.mode_of_operation.mode} mode you cannot vote for proposals or see the generated agenda."
-      redirect_to dashboard_path
-    end
+    alert_text = t('vestibule.selections.action_alert.see', mode: Vestibule.mode_of_operation.mode)
+    action_allowed_guard(can?(:see, :selection) || can?(:see, :agenda), alert_text, dashboard_path)
   end
 
   def check_mode_of_operation_for_selection
-    unless can?(:make, :selection)
-      flash[:alert] = "In #{Vestibule.mode_of_operation.mode} mode you cannot vote for proposals."
-      redirect_to dashboard_path
-    end
+    alert_text = t('vestibule.selections.action_alert.vote', mode: Vestibule.mode_of_operation.mode)
+    action_allowed_guard(can?(:make, :selection), alert_text, dashboard_path)
   end
 end

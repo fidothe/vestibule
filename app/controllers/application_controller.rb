@@ -28,4 +28,11 @@ class ApplicationController < ActionController::Base
       flash.now[:archive] = t('vestibule.archive.notice').html_safe
     end
   end
+
+  def action_allowed_guard(can_query, alert_text, *redirect_args)
+    no_one(can_query) do
+      flash[:alert] = alert_text
+      redirect_to *redirect_args
+    end
+  end
 end
