@@ -1,7 +1,7 @@
 class SelectionsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index]
-  before_filter :check_mode_of_operation_for_viewing, only: [:index]
-  before_filter :check_mode_of_operation_for_selection, only: [:create, :destroy]
+  before_filter :check_viewing_allowed, only: [:index]
+  before_filter :check_voting_allowed, only: [:create, :destroy]
 
   def index
     if can?(:see, :agenda)
@@ -28,13 +28,17 @@ class SelectionsController < ApplicationController
   end
 
   private
-  def check_mode_of_operation_for_viewing
-    alert_text = t('vestibule.selections.action_alert.see', mode: Vestibule.mode_of_operation.mode)
-    action_allowed_guard(can?(:see, :selection) || can?(:see, :agenda), alert_text, dashboard_path)
+  def check_viewing_allowed
+    no_one(can?(:see, :selection) || can?(:see, :agenda)) do
+      flash[:alert] = t('vestibule.selections.action_alert.see', mode: Vestibule.mode_of_operation.mode)
+      redirect_to dashboard_path
+    end
   end
 
-  def check_mode_of_operation_for_selection
-    alert_text = t('vestibule.selections.action_alert.vote', mode: Vestibule.mode_of_operation.mode)
-    action_allowed_guard(can?(:make, :selection), alert_text, dashboard_path)
+  def check_voting_allowed
+    no_one(can?(:make, :selection)) do
+      flash[:alert] = t('vestibule.selections.action_alert.vote', mode: Vestibule.mode_of_operation.mode)
+      redirect_to dashboard_path
+    end
   end
 end

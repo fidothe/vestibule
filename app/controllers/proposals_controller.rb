@@ -70,7 +70,9 @@ class ProposalsController < ApplicationController
   end
 
   def check_action_allowed
-    alert_text = t('vestibule.proposals.action_alert', mode: Vestibule.mode_of_operation.mode, action: requested_action)
-    action_allowed_guard(can?(requested_action, :proposal), alert_text, action: :index)
+    no_one(can?(requested_action, :proposal)) do
+      flash[:alert] = t('vestibule.proposals.action_alert', mode: Vestibule.mode_of_operation.mode, action: requested_action)
+      redirect_to action: :index
+    end
   end
 end
