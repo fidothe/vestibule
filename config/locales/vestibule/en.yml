@@ -13,11 +13,11 @@ en:
       selections:
         title: Selections
         vote:
-          html: It is time for you to %{link}.
-          link: choose the talks you want to see on the day
+          html: It's time for you to %{link}.
+          link: vote for the talks you want to see on the day
         agenda:
-          html: The community has spoken; %{link}.
-          link: take a look at the agenda they have generated
+          html: The results are in: %{link}.
+          link: take a look at the talks which have been selected
         holding:
           html: The time for voting is over! We're collating all the selections and preparing the agenda. You can still %{link}.
           link: view selections you made
@@ -34,6 +34,7 @@ en:
       feed:
         title: "Vestibule :: All Proposals"
         description: A list of all talk proposals made to the vestibule system
+      action_alert: "In %{mode} mode you cannot %{action} a proposal."
     proposal:
       title: Propose a talk
       chosen: This proposal by %{link} has been chosen to be given at UIKonf 2014.
@@ -60,6 +61,8 @@ en:
       feed:
         title: "Vestibule :: Suggestions for %{proposal_title}"
         description: A list of all suggestions made for %{proposal_title}
+    suggestions:
+      action_alert: "In %{mode} mode you cannot make a suggestion."
     selections:
       title: Selections
       agenda:
@@ -79,18 +82,13 @@ en:
           one: "1 selection left!"
           several: "%{quantity} selections left!"
           none: Deselect some above to choose others
+      action_alert:
+        see: "In %{mode} mode you cannot vote for proposals or see the generated agenda."
+        vote: "In %{mode} mode you cannot vote for proposals."
     user:
       title: Your profile
       edit:
         title: Update your information
-      motivation:
-        title: "Motivations"
-        actions:
-          edit: Edit your reason
-        missing:
-          your: Other attendees are wondering what you hope to get out of Ruby Manor. %{link}.
-          link: Tell them now
-          other: "%{name} hasn't said what they hope to get out of Ruby Manor yet."
       proposals:
         your:
           title: "Your proposals"
@@ -101,4 +99,6 @@ en:
         involved:
           title: Proposals %{name_is_or_are} involved with
           none: "%{name_is_or_are} not involved with anybody else's proposals."
+    archive:
+      notice: This version of Vestibule is <em>read only</em>. It represents the results of the open Call for Proposals for <a href="http://2014.uikonf.com/">UIKonf 2014</a>.
 
