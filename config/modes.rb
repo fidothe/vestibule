@@ -4,16 +4,12 @@ Vestibule::Application.modes.define do
     can :change, :proposal
     can :make, :suggestion
     can :withdraw, :proposal
-    can :add, :motivation
-    can :see, :motivation
   end
 
   mode :review do
     can :change, :proposal
     can :make, :suggestion
     can :withdraw, :proposal
-    can :add, :motivation
-    can :see, :motivation
   end
 
   mode :voting do
@@ -22,8 +18,6 @@ Vestibule::Application.modes.define do
     can :withdraw, :proposal
     can :make, :selection
     can :see, :selection
-    can :add, :motivation
-    can :see, :motivation
   end
 
   mode :holding do
@@ -31,8 +25,6 @@ Vestibule::Application.modes.define do
     can :make, :suggestion
     can :withdraw, :proposal
     can :see, :selection
-    can :add, :motivation
-    can :see, :motivation
   end
 
   mode :agenda do
@@ -41,14 +33,11 @@ Vestibule::Application.modes.define do
     can :withdraw, :proposal
     can :see, :selection
     can :see, :agenda
-    can :see, :motivation
-    can :add, :motivation
   end
 
   mode :archive do
     can :see, :agenda
     can :see, :selection
-    can :see, :motivation
   end
 
   default :cfp
