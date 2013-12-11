@@ -16,7 +16,7 @@ en:
           html: It's time for you to %{link}.
           link: vote for the talks you want to see on the day
         agenda:
-          html: The results are in: %{link}.
+          html: "The results are in: %{link}."
           link: take a look at the talks which have been selected
         holding:
           html: The time for voting is over! We're collating all the selections and preparing the agenda. You can still %{link}.
