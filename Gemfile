@@ -1,5 +1,5 @@
 source "http://rubygems.org"
-ruby "1.9.3"
+ruby "2.0.0"
 
 gem "rails", "3.2.16"
 gem "pg", "0.17.0"
@@ -8,6 +8,7 @@ gem 'omniauth-github', '1.0.3'
 gem "paper_trail", "1.6.4"
 gem "redcarpet", "2.2.2"
 gem "bootstrap-sass"
+gem 'unicorn'
 
 # Gems used only for assets and not required
 # in production environments by default.
