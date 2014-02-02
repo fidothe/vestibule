@@ -67,6 +67,34 @@ class UserTest < ActiveSupport::TestCase
       end
     end
 
+    context "who watches someone else's proposal" do
+      setup do
+        @other_user = FactoryGirl.create(:user)
+        @proposal = FactoryGirl.create(:proposal, :proposer => @other_user)
+      end
+
+      should 'appear on the watcher list for the proposal' do
+        @user.watch(@proposal)
+        assert @proposal.watchers.include?(@user)
+      end
+
+      should "acknowledge that they're watching the proposal" do
+        @user.watch(@proposal)
+        assert @user.watching?(@proposal)
+      end
+
+      should "can have their watch state toggled on from off" do
+        @user.toggle_watch(@proposal)
+        assert @user.watching?(@proposal)
+      end
+
+      should "can have their watch state toggled off from on" do
+        @user.watch(@proposal)
+        @user.toggle_watch(@proposal)
+        refute @user.watching?(@proposal)
+      end
+    end
+
     should "not be thought anonymous" do
       refute @user.anonymous?
       assert @user.known?

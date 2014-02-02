@@ -6,6 +6,10 @@ class SuggestionsController < ApplicationController
     check_mode_of_operation
     @suggestion = current_user.suggestions.build(params[:suggestion].merge(:proposal => @proposal))
     if @suggestion.save
+      if can?(:watch, :proposal)
+        current_user.watch(@proposal) if params[:watch_proposal]
+        WatchedProposalNotifier.notify_new_suggestion(@proposal, current_user)
+      end
       redirect_to proposal_path(@proposal)
     else
       render :template => 'proposals/show'
@@ -18,5 +22,4 @@ class SuggestionsController < ApplicationController
       redirect_to proposal_path(@proposal)
     end
   end
-
 end

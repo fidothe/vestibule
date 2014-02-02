@@ -186,6 +186,54 @@ class ProposalTest < IntegrationTestCase
           assert page.has_xpath?('.//item[position() = 1]/title', :text => "My Amazing Talk")
         end
       end
+
+      context "watching proposals for changes" do
+        context "when the proposal is mine" do
+          setup do
+            propose_talk :title => "My Amazing Talk", :description => 'This talk is amazing.'
+            @proposal = Proposal.find_by_title!("My Amazing Talk")
+            visit proposal_path(@proposal)
+          end
+
+          should "be watching by default" do
+            assert page.has_content?("Email notifications about changes and suggestions on")
+          end
+
+          should "I can stop getting email notifications" do
+            click_button I18n.t("vestibule.proposal.watch.stop")
+            assert page.has_content?("Email notifications about changes and suggestions off")
+          end
+        end
+
+        context "when the proposal is someone else's" do
+          setup do
+            @proposal = FactoryGirl.create(:proposal)
+            visit proposal_path(@proposal)
+          end
+
+          should "not be watching by default" do
+            assert page.has_content?("Email notifications about changes and suggestions off")
+          end
+
+          should "I can start getting email notificiations" do
+            click_button I18n.t("vestibule.proposal.watch.start")
+            assert page.has_content?("Email notifications about changes and suggestions on")
+          end
+
+          should "receive an email notification if the proposal is updated" do
+            @user.watch(@proposal)
+            sign_in @proposal.proposer
+            visit proposal_path(@proposal)
+            click_link "Edit proposal"
+            fill_in "Description", :with => "This talk is wildly amazing."
+            click_button "Update proposal"
+
+            refute ActionMailer::Base.deliveries.empty?
+            email = ActionMailer::Base.deliveries.last
+            assert email.to.include?(@user.email)
+          end
+        end
+      end
     end
 
     context 'and the app is in "review mode"' do

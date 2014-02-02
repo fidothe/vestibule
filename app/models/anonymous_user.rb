@@ -6,4 +6,8 @@ class AnonymousUser
   def anonymous?
     true
   end
+
+  def watching?(proposal)
+    false
+  end
 end

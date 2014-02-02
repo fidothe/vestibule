@@ -12,4 +12,9 @@ class AnonymousUserTest < ActiveSupport::TestCase
   should "not claim to be known" do
     refute @anon.known?
   end
+
+  should "is watching nothing" do
+    stub_proposal = BasicObject.new
+    refute @anon.watching?(stub_proposal)
+  end
 end

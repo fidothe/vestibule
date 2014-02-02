@@ -23,10 +23,17 @@ class ProposalsController < ApplicationController
   def create
     @proposal = current_user.proposals.new(params[:proposal])
     if @proposal.save
+      current_user.watch(@proposal)
       redirect_to proposals_path
     else
       render :new
     end
+  end
+
+  def watch
+    @proposal = Proposal.find(params[:id])
+    current_user.toggle_watch(@proposal)
+    redirect_to proposal_path(@proposal)
   end
 
   before_filter :load_proposal_for_editing, :only => [:edit, :update]
@@ -36,6 +43,10 @@ class ProposalsController < ApplicationController
 
   def update
     if @proposal.update_attributes(params[:proposal])
+      if can?(:watch, :proposal)
+        current_user.watch(@proposal) if params[:watch_proposal]
+        WatchedProposalNotifier.notify_proposal_change(@proposal, current_user)
+      end
       redirect_to proposal_path(@proposal)
     else
       render :edit

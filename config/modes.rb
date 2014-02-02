@@ -4,12 +4,14 @@ Vestibule::Application.modes.define do
     can :change, :proposal
     can :make, :suggestion
     can :withdraw, :proposal
+    can :watch, :proposal
   end
 
   mode :review do
     can :change, :proposal
     can :make, :suggestion
     can :withdraw, :proposal
+    can :watch, :proposal
   end
 
   mode :voting do
@@ -18,6 +20,7 @@ Vestibule::Application.modes.define do
     can :withdraw, :proposal
     can :make, :selection
     can :see, :selection
+    can :watch, :proposal
   end
 
   mode :holding do

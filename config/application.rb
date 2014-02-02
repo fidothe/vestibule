@@ -51,6 +51,9 @@ module Vestibule
       end
     end
 
+    # set the email address notification emails come from
+    config.notification_email_from_address = "questions@uikonf.com"
+
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', 'vestibule', '*.{rb,yml}')]
   end
 end

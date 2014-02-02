@@ -1,6 +1,8 @@
 class Proposal < ActiveRecord::Base
   belongs_to :proposer, :class_name => 'User'
   has_many :suggestions
+  has_many :watch_notifications
+  has_many :watchers, :through => :watch_notifications, :source => :user
 
   validates :title, :presence => true
 

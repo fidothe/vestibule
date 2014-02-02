@@ -2,6 +2,8 @@ class Suggestion < ActiveRecord::Base
   belongs_to :author, :class_name => "User"
   belongs_to :proposal
 
+  attr_accessor :watch_proposal
+
   scope :by, lambda { |user| where(:author_id => user) }
   scope :latest, order('updated_at DESC')
   scope :after, lambda { |timestamp| where('updated_at > ?', timestamp) }

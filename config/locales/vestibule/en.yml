@@ -58,6 +58,10 @@ en:
           title: Make your suggestion
           your: You can respond to suggestions here. As the proposer of the talk, your identity will be masked from other visitors.
           other: Help develop this into a good proposal by asking questions about anything that isn't clear, making suggestions about what to include or avoid, and asking for more detail or clarifications.
+      watch:
+        checkbox: "Email me if the proposal is updated or there are more suggestions"
+        start: Start notifying me
+        stop: Stop notifying me
       feed:
         title: "Vestibule :: Suggestions for %{proposal_title}"
         description: A list of all suggestions made for %{proposal_title}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130315135423) do
+ActiveRecord::Schema.define(:version => 20140201141609) do
 
   create_table "proposals", :force => true do |t|
     t.string   "title"
@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(:version => 20130315135423) do
     t.string   "github_uid"
     t.string   "github_nickname"
     t.string   "email"
+  end
+
+  create_table "watch_notifications", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "proposal_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
 end

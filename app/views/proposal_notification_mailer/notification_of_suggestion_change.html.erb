@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>A new suggestion has been added to your watched proposal <%= link_to @proposal.title, proposal_path(@proposal) %>.</p>
+
+    <p>This mail was sent by UIKonf.</p>
+
+    <p><small>If you don't want to receive these notifications, visit <%= link_to "the proposal", proposal_path(@proposal) %> and you can switch them off.</small></p>
+  </body>
+</html>

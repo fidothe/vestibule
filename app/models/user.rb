@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_many :suggestions, :foreign_key => :author_id
   has_many :proposals_of_interest, :through => :suggestions, :source => :proposal, :uniq => true
   has_many :selections
+  has_many :watch_notifications
+  has_many :watched_proposals, :through => :watch_notifications, :source => :proposal
 
   scope :with_signup_reasons, where("signup_reason IS NOT NULL")
   scope :without_signup_reasons, where(:signup_reason => nil)
@@ -32,6 +34,24 @@ class User < ActiveRecord::Base
       user.email = auth["info"]["email"]
     end
   end
+
+  def watch(proposal)
+    watch_notifications.where(proposal_id: proposal.id).first_or_create
+  end
+
+  def watching?(proposal)
+    watched_proposals.where(id: proposal.id).count > 0
+  end
+
+  def toggle_watch(proposal)
+    watch_notification = watch_notifications.where(proposal_id: proposal.id).first
+    if watch_notification.blank?
+      watch_notifications.where(proposal_id: proposal.id).create
+    else
+      watch_notification.destroy
+    end
+  end
+
 
   def to_param
     github_nickname

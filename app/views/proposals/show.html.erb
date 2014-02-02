@@ -13,6 +13,17 @@
         <% if @proposal.withdrawn? %><h2 class="withdrawl_explanation"><%=t "vestibule.proposal.withdrawn" %></h2><% end %>
         <div class="description"><%= markdown @proposal.description %></div>
       <% end %>
+      <% if current_user.known? %>
+        <div class="watch">
+          <%= form_tag watch_proposal_path(@proposal) do %>
+            <% if current_user.watching?(@proposal) %>
+              <p>Email notifications about changes and suggestions <strong>on</strong> <%= submit_tag t("vestibule.proposal.watch.stop"), class: "btn" %>
+            <% else %>
+              <p>Email notifications about changes and suggestions <strong>off</strong> <%= submit_tag t("vestibule.proposal.watch.start"), class: "btn" %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 
@@ -34,6 +45,13 @@
           <% end %>
 
           <%= f.input :body, as: :markdown, input_html: {rows: 10} %>
+          <% unless current_user.watching?(@proposal) %>
+            <div class="checkbox">
+              <label>
+                <%= check_box_tag :watch_proposal, 1, true %><%= t("vestibule.proposal.watch.checkbox") %>
+              </label>
+            </div>
+          <% end %>
           <%= f.button :submit, t("vestibule.proposal.suggestions.make.title"), class: "btn" %>
         <% end %>
       <% end %>

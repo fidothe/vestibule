@@ -72,6 +72,29 @@ Other than that, sounds great!
           end
         end
 
+        should "by default they'll receive email notifications about responses to their suggestion" do
+          suggest "I think you should focus on the first bit, because that's going to be more interesting to newbies."
+
+          assert page.has_content?("Email notifications about changes and suggestions on")
+        end
+
+        should "be able to opt out of receiving notification emails about responses to their suggestion" do
+          suggest "I think you should focus on the first bit, because that's going to be more interesting", watch: false
+
+          assert page.has_content?("Email notifications about changes and suggestions off")
+        end
+
+        context 'when already watching the proposal for changes' do
+          setup do
+            @me.watch(@proposal)
+            visit proposal_path(@proposal)
+          end
+
+          should 'not be asked about receiving notifications' do
+            refute page.has_content?(I18n.t("vestibule.proposal.watch.checkbox"))
+          end
+        end
+
         context 'when there are some suggestions already' do
           setup do
             @other_suggestion = FactoryGirl.create(:suggestion, :proposal => @proposal, :created_at => 2.days.ago, :updated_at => 2.days.ago)
@@ -128,6 +151,20 @@ Other than that, sounds great!
         should "not be able to make a '-1' suggestion" do
           suggest "-1"
           i_am_warned_about Suggestion, :body, "should contain some concrete suggestions about how to develop this proposal"
+        end
+
+        context "A proposal with people watching for changes" do
+          should "watchers should receive an email notification when a suggestion is created" do
+            @me.watch(@proposal)
+            sign_in @proposal.proposer
+            visit proposal_path(@proposal)
+            suggest "I think you should focus on the first bit, because that's going to be more interesting to newbies."
+
+            refute ActionMailer::Base.deliveries.empty?
+            email = ActionMailer::Base.deliveries.last
+            assert email.to.include?(@me.email)
+          end
+
         end
       end
 
@@ -221,8 +258,9 @@ Other than that, sounds great!
     end
   end
 
-  def suggest(body)
+  def suggest(body, opts = {})
     fill_in "suggestion[body]", :with => body
+    uncheck I18n.t("vestibule.proposal.watch.checkbox") if opts[:watch] == false
     click_button "Make your suggestion"
   end
 end
