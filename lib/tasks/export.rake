@@ -1,5 +1,6 @@
 task :export => :environment do
   require 'csv'
+  require 'securerandom'
 
   csv_path = Rails.root.join('public/tmp', SecureRandom.uuid + '.csv')
   CSV.open(csv_path, 'w:Windows-1252') do |csv|
