@@ -27,5 +27,5 @@ task :export => :environment do
     end
   end
 
-  VotesMailer.votes_email(csv).deliver
+  VotesMailer.votes_email(csv_string).deliver
 end
