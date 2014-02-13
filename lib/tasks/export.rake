@@ -6,6 +6,7 @@ task :export => :environment do
     def votes_email(csv)
       attachments['votes.csv'] = csv
       mail(to: "uikonf-team@googlegroups.com",
+           from: "questions@uikonf.com",
            body: "Votes",
            subject: "Votes")
     end
