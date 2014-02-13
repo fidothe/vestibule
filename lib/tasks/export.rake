@@ -2,8 +2,16 @@ task :export => :environment do
   require 'csv'
   require 'securerandom'
 
-  csv_path = Rails.root.join('public/', SecureRandom.uuid + '.csv')
-  CSV.open(csv_path, 'w:UTF-8') do |csv|
+  class VotesMailer < ActionMailer::Base
+    def votes_email(csv)
+      attachments['votes.csv'] = csv
+      mail(to: "uikonf-team@googlegroups.com",
+           body: "Votes",
+           subject: "Votes")
+    end
+  end
+
+  csv_string = CSV.generate do |csv|
     csv << ['votes', 'title', 'author', 'email', 'ID', 'URL']
     Proposal.all.each do |proposal|
       votes = Selection.where(proposal_id: proposal.id).count
@@ -18,5 +26,6 @@ task :export => :environment do
       ]
     end
   end
-  puts "http://vestibule.uikonf.com/#{csv_path.basename}"
+
+  VotesMailer.votes_email(csv).deliver
 end
