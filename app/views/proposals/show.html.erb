@@ -13,7 +13,7 @@
         <% if @proposal.withdrawn? %><h2 class="withdrawl_explanation"><%=t "vestibule.proposal.withdrawn" %></h2><% end %>
         <div class="description"><%= markdown @proposal.description %></div>
       <% end %>
-      <% if current_user.known? %>
+      <%= user_can(:watch, :proposal) do %>
         <div class="watch">
           <%= form_tag watch_proposal_path(@proposal) do %>
             <% if current_user.watching?(@proposal) %>
