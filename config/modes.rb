@@ -28,6 +28,7 @@ Vestibule::Application.modes.define do
     can :make, :suggestion
     can :withdraw, :proposal
     can :see, :selection
+    can :watch, :proposal
   end
 
   mode :agenda do
@@ -36,6 +37,7 @@ Vestibule::Application.modes.define do
     can :withdraw, :proposal
     can :see, :selection
     can :see, :agenda
+    can :watch, :proposal
   end
 
   mode :archive do
