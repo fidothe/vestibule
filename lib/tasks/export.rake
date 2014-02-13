@@ -3,7 +3,7 @@ task :export => :environment do
   require 'securerandom'
 
   csv_path = Rails.root.join('public/', SecureRandom.uuid + '.csv')
-  CSV.open(csv_path, 'w:Windows-1252') do |csv|
+  CSV.open(csv_path, 'w:UTF-8') do |csv|
     csv << ['votes', 'title', 'author', 'email', 'ID', 'URL']
     Proposal.all.each do |proposal|
       votes = Selection.where(proposal_id: proposal.id).count
