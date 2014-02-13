@@ -6,7 +6,7 @@ task :export => :environment do
   CSV.open(csv_path, 'w:Windows-1252') do |csv|
     csv << ['votes', 'title', 'author', 'email', 'ID', 'URL']
     Proposal.all.each do |proposal|
-      votes = proposal.selections.count
+      votes = Selection.where(proposal_id: proposal.id).count
       author = proposal.proposer
       csv << [
         votes,
@@ -18,5 +18,5 @@ task :export => :environment do
       ]
     end
   end
-  puts "http://vestibule.uikonf.com/tmp/#{csv_path.basename}"
+  puts "http://vestibule.uikonf.com/#{csv_path.basename}"
 end
